@@ -1,3 +1,8 @@
+using OpenQA.Selenium.Appium;
+using OpenQA.Selenium.Appium.Android;
+using OpenQA.Selenium.Appium.Enums;
+using OpenQA.Selenium.Appium.MultiTouch;
+
 namespace appium;
 
 public class SelecaoProdutoMDA
@@ -34,6 +39,42 @@ public class SelecaoProdutoMDA
     [Test]
     public void SelecionarProduto()
     {
+        // É importante começar com uma linha que aguarda carregar algum elemento da página inicial do app 
+        Assert.That(driver.FindElement(MobileBy.AccessibilityId("App logo and name")).Displayed, Is.True);
 
+       // Clicar no produto mochila
+        driver.FindElement(MobileBy.AccessibilityId("Sauce Labs Backpack")).Click();
+
+      // Arrasta para cima
+        TouchAction touchAction = new TouchAction(driver); // instancia objeto para reproduzir gestos
+        touchAction.Press(600, 1700);
+        touchAction.MoveTo(600, 700);
+        touchAction.Release();
+        touchAction.Perform();
+
+        //Adicionar produto 1 ao carrinho
+        driver.FindElement(MobileBy.AccessibilityId("Tap to add product to cart")).Click();
+        //Adicionar produto 2 ao carrinho
+        driver.FindElement(MobileBy.AccessibilityId("Tap to add product to cart")).Click();
+
+        //Clicar no carrinho
+        driver.FindElement(MobileBy.Id("com.saucelabs.mydemoapp.android:id/cartTV")).Click();
+
+        //Validar nome do produto no carrinho
+        String nomeProduto = driver.FindElement(MobileBy.Id("com.saucelabs.mydemoapp.android:id/titleTV")).Text;
+        Assert.That(nomeProduto, Is.EqualTo("Sauce Labs Backpack"));
+
+        //Validar preço do produto
+        String precoProduto = driver.FindElement(MobileBy.Id("com.saucelabs.mydemoapp.android:id/priceTV")).Text;
+        Assert.That(precoProduto, Is.EqualTo("$59.98"));
+
+        //Validar a quantidade de produtos no carrinho
+        String quantidadeCarrinho = driver.FindElement(MobileBy.Id("com.saucelabs.mydemoapp.android:id/noTV")).Text;
+        Assert.That(quantidadeCarrinho, Is.EqualTo("2"));
+
+
+
+        
     }
-    }
+
+ }
