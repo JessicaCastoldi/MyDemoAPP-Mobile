@@ -1,0 +1,77 @@
+import io.appium.java_client.MobileElement;
+import io.appium.java_client.android.AndroidDriver;
+import junit.framework.TestCase;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+import java.net.MalformedURLException;
+import java.net.URL;
+import org.openqa.selenium.remote.DesiredCapabilities;
+
+public class SampleTest {
+
+  private AndroidDriver driver;
+
+  @Before
+  public void setUp() throws MalformedURLException {
+    DesiredCapabilities desiredCapabilities = new DesiredCapabilities();
+    desiredCapabilities.setCapability("platformName", "Android");
+    desiredCapabilities.setCapability("appium:platformVersion", "9.0");
+    desiredCapabilities.setCapability("appium:deviceName", "Samsung Galaxy S9 FHD GoogleAPI Emulator");
+    desiredCapabilities.setCapability("appium:deviceOrientation", "portrait");
+    desiredCapabilities.setCapability("appium:app", "storage:filename=mda-2.0.0-21.apk");
+    desiredCapabilities.setCapability("appium:appPackage", "com.saucelabs.mydemoapp.android");
+    desiredCapabilities.setCapability("appium:appActivity", "com.saucelabs.mydemoapp.android.view.activities.SplashActivity");
+    desiredCapabilities.setCapability("appium:ensureWebviewsHavePages", true);
+    desiredCapabilities.setCapability("appium:nativeWebScreenshot", true);
+    desiredCapabilities.setCapability("sauce:options", {"name":"Appium Desktop Session -- Dec 4, 2023 9:56 PM"});
+    desiredCapabilities.setCapability("appium:newCommandTimeout", 3600);
+    desiredCapabilities.setCapability("appium:connectHardwareKeyboard", true);
+
+    URL remoteUrl = new URL("http://ondemand.us-west-1.saucelabs.com:80/wd/hub");
+
+    driver = new AndroidDriver(remoteUrl, desiredCapabilities);
+  }
+
+  @Test
+  public void sampleTest() {
+    MobileElement el1 = (MobileElement) driver.findElementByXPath("//android.widget.ImageView[@content-desc=\"Sauce Labs Backpack\"]");
+    el1.click();
+    MobileElement el2 = (MobileElement) driver.findElementById("com.saucelabs.mydemoapp.android:id/productTV");
+    el2.click();
+    MobileElement el3 = (MobileElement) driver.findElementById("com.saucelabs.mydemoapp.android:id/priceTV");
+    el3.click();
+    (new TouchAction(driver))
+      .press(PointOption.point(544, 421}))
+      .moveTo(PointOption.point(532, 1183}))
+      .release()
+      .perform();
+    (new TouchAction(driver))
+      .press(PointOption.point(498, 483}))
+      .moveTo(PointOption.point(494, 1697}))
+      .release()
+      .perform();
+    (new TouchAction(driver))
+      .press(PointOption.point(555, 1436}))
+      .moveTo(PointOption.point(513, 444}))
+      .release()
+      .perform();
+    MobileElement el4 = (MobileElement) driver.findElementByAccessibilityId("Tap to add product to cart");
+    el4.click();
+    MobileElement el5 = (MobileElement) driver.findElementByAccessibilityId("Tap to add product to cart");
+    el5.click();
+    MobileElement el6 = (MobileElement) driver.findElementById("com.saucelabs.mydemoapp.android:id/cartTV");
+    el6.click();
+    MobileElement el7 = (MobileElement) driver.findElementById("com.saucelabs.mydemoapp.android:id/noTV");
+    el7.click();
+    MobileElement el8 = (MobileElement) driver.findElementById("com.saucelabs.mydemoapp.android:id/titleTV");
+    el8.click();
+    MobileElement el9 = (MobileElement) driver.findElementById("com.saucelabs.mydemoapp.android:id/priceTV");
+    el9.click();
+  }
+
+  @After
+  public void tearDown() {
+    driver.quit();
+  }
+}
